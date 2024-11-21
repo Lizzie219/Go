@@ -61,4 +61,47 @@ public class GoState implements Predicate<Point> {
         return Arrays.stream(neighbors).filter(this::test).toArray(Point[]::new);
     }
 
+    //TODO -- hardest
+    public Point[] getLiberties(Stone s, Point p, Set<Point> scanned){
+        return null;
+    }
+
+    // turn is maybe bad, or the BoardsSpace.empty part
+    public void checkCaptured(Point point) {
+        if(getLiberties(this.turn, point, new HashSet<>()).length == 0){
+            board[point.x][point.y] = BoardSpace.EMPTY;
+            if(turn == Stone.BLACK){
+                whiteCaptured++;
+            }
+            else{
+                blackCaptured++;
+            }
+        }
+    }
+
+    //TODO
+    public GoState placeStone(Point point) {
+        // places the stone
+        board[point.x][point.y] = BoardSpace.fromStone(turn);
+
+        // deals with neighbours
+        Arrays.stream(getNeighbors(point)).forEach(this::checkCaptured);
+
+        return this;
+    }
+
+    //TODO -- second hardest
+    public boolean isLegalMove(Point point){
+        return false;
+    }
+
+    //TODO --
+    public boolean makeMove(Point p){
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Black Captured: " + blackCaptured +  "\n" + "White Captured: " + whiteCaptured;
+    }
 }
